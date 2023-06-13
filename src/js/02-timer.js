@@ -1,8 +1,9 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import Notiflix from 'notiflix';
 
 const datetimePicker = document.getElementById('datetime-picker');
-const startButton = document.querySelector('[data-start]');
+const btnStart = document.querySelector('[data-start]');
 const daysValue = document.querySelector('[data-days]');
 const hoursValue = document.querySelector('[data-hours]');
 const minutesValue = document.querySelector('[data-minutes]');
@@ -15,20 +16,27 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     const selectedDate = selectedDates[0];
-    if (selectedDate < new Date()) {
-      window.alert('Please choose a date in the future');
-      startButton.disabled = true;
+    if (selectedDate < Date.now()) {
+      Notiflix.Notify.failure('Please choose a date in the future', {
+        timeout: 3000, //
+      });
+      btnStart.disabled = true;
     } else {
-      startButton.disabled = false;
+      btnStart.disabled = false;
     }
   },
 };
 
 flatpickr(datetimePicker, options);
 
+let updateTimer;
+
 function startCountdown() {
   const selectedDate = new Date(datetimePicker.value).getTime();
-  const updateTimer = setInterval(() => {
+  btnStart.disabled = true;
+  datetimePicker.disabled = true;
+
+  updateTimer = setInterval(() => {
     const currentDate = new Date().getTime();
     const difference = selectedDate - currentDate;
 
@@ -38,7 +46,7 @@ function startCountdown() {
       hoursValue.textContent = '00';
       minutesValue.textContent = '00';
       secondsValue.textContent = '00';
-      startButton.disabled = true;
+      btnStart.disabled = true;
       datetimePicker.disabled = false;
       return;
     }
@@ -49,17 +57,10 @@ function startCountdown() {
     hoursValue.textContent = addLeadingZero(hours);
     minutesValue.textContent = addLeadingZero(minutes);
     secondsValue.textContent = addLeadingZero(seconds);
-
-    if (days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
-      startButton.disabled = true;
-    }
   }, 1000);
-
-  startButton.disabled = true;
-  datetimePicker.disabled = true;
 }
 
-startButton.addEventListener('click', startCountdown);
+btnStart.addEventListener('click', startCountdown);
 
 function convertMs(ms) {
   const second = 1000;
