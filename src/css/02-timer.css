@@ -1,5 +1,7 @@
-.timer__items {
+.timer {
   display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 48px;
 }
 
@@ -26,4 +28,8 @@
   content: ':';
   position: absolute;
   right: -15px;
+}
+
+.timer__items {
+  display: none;
 }
