@@ -38,8 +38,8 @@ function startCountdown() {
       hoursValue.textContent = '00';
       minutesValue.textContent = '00';
       secondsValue.textContent = '00';
-      startButton.disabled = false; // Активуємо кнопку після закінчення відліку
-      datetimePicker.disabled = false; // Активуємо вікно вибору дати після закінчення відліку
+      startButton.disabled = true;
+      datetimePicker.disabled = false;
       return;
     }
 
@@ -49,10 +49,14 @@ function startCountdown() {
     hoursValue.textContent = addLeadingZero(hours);
     minutesValue.textContent = addLeadingZero(minutes);
     secondsValue.textContent = addLeadingZero(seconds);
+
+    if (days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
+      startButton.disabled = true;
+    }
   }, 1000);
 
-  startButton.disabled = true; // Деактивуємо кнопку при запуску відліку
-  datetimePicker.disabled = true; // Деактивуємо вікно вибору дати при запуску відліку
+  startButton.disabled = true;
+  datetimePicker.disabled = true;
 }
 
 startButton.addEventListener('click', startCountdown);
