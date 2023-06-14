@@ -9,9 +9,16 @@ const stopButton = document.querySelector('[data-stop]');
 
 let intervalId = null;
 
+function toggleButtons(disableStart) {
+  startButton.disabled = disableStart;
+  stopButton.disabled = !disableStart;
+}
+
 startButton.addEventListener('click', () => {
-  startButton.disabled = true;
-  stopButton.disabled = false;
+  const startButton = document.querySelector('[data-start]');
+  const stopButton = document.querySelector('[data-stop]');
+
+  toggleButtons(true);
 
   intervalId = setInterval(() => {
     document.body.style.backgroundColor = getRandomHexColor();
@@ -19,8 +26,10 @@ startButton.addEventListener('click', () => {
 });
 
 stopButton.addEventListener('click', () => {
-  startButton.disabled = false;
-  stopButton.disabled = true;
+  const startButton = document.querySelector('[data-start]');
+  const stopButton = document.querySelector('[data-stop]');
+
+  toggleButtons(false);
 
   clearInterval(intervalId);
 });
