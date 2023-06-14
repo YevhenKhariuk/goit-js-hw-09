@@ -14,7 +14,6 @@ function createPromise(position, delay) {
 }
 
 const form = document.querySelector('.form');
-const btnSubmit = form.querySelector('button[type=submit]');
 const delayInput = form.elements.delay;
 const stepInput = form.elements.step;
 const amountInput = form.elements.amount;
@@ -25,12 +24,6 @@ form.addEventListener('submit', event => {
   const firstDelay = parseInt(delayInput.value);
   const delayStep = parseInt(stepInput.value);
   const amount = parseInt(amountInput.value);
-
-  const savedDelayValue = delayInput.value;
-  const savedStepValue = stepInput.value;
-  const savedAmountValue = amountInput.value;
-
-  btnSubmit.disabled = true;
 
   let currentDelay = firstDelay;
 
@@ -50,9 +43,4 @@ form.addEventListener('submit', event => {
     currentDelay += delayStep;
   }
 
-  delayInput.value = savedDelayValue;
-  stepInput.value = savedStepValue;
-  amountInput.value = savedAmountValue;
-
-  btnSubmit.disabled = false;
 });
